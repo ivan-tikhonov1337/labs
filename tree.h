@@ -5,27 +5,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct binaryTree {                      //Создаем структуру узла для дерева
-    int data;                                    //Значение узла
-    struct Tree *left;                           //Левая ветка
-    struct Tree *right;                          //Правая ветка
-    struct Tree *parent;                         //Родитель
-}Tree;                                           //запишем так, чтобы не писать каждый раз struct ...
+struct node {                    //структура узла дерева
+    int data;
+    struct node *left;
+    struct node *right;
+};
 
-Tree *node_create(int value);
+struct node* create_node(int data);
 
-Tree *add_Node(Tree *node, int value);
+struct node* add_node(struct node *root, int data);
 
-void tree_print(Tree *root, int n);
+struct node* find_min_node(struct node *root);
 
-Tree *search_in_tree(Tree *root, int value);
+struct node* delete_node(struct node *root, int data);
 
-Tree *minimum(Tree *tree);
+void print_tree(struct node *root, int n);
 
-Tree *delete_element(Tree *tree, int value;
+bool is_Level_Leaf(struct node *tree, int level, int *leafLevel);
 
 void print_menu();
-
-bool is_Level_Leaf(Tree *tree, int level, int *leafLevel;
 
 #endif
