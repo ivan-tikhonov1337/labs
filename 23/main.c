@@ -4,32 +4,26 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void print_menu() {                                             // Функция для печати меню
-    printf("\nВыберите дейтвие и введите его номер:\n0) Выход\n");
-    printf("1) Ввести в дерево элемент.\n");
-    printf("2) Распечатать дерево.\n");
-    printf("3) Удалить элемент из дерева.\n");
-    printf("4) Проверить все ли листья на одном уровне.\n");
-    printf("5) Вывести меню.\n");
+int max_depth = -1;
+
+void dfs(struct node *root, int depth) {
+    if (root == NULL)                                     //Если NULL, то завершим выполнение функции
+        return;
+    if (root->left == NULL && root->right == NULL) {     //Если лист, то узнаем глубину
+        if (max_depth == -1)                             //Проверка на первый лист
+            max_depth = depth;
+        else if (depth != max_depth) {                   //Проверка на тот же уровень остальных листов
+            max_depth = -2;
+            return;                                      //Если нашелся такой лист, то заверишм ф-цию
+        }
+    }
+    dfs(root->left, depth + 1);
+    dfs(root->right, depth + 1);
 }
 
-bool is_Level_Leaf(struct node *tree, int level, int *leafLevel) {    //Проверка на уровень листов
-    if (tree == NULL)                                                 //Если дерево пустое, то всё верно, листья на одном уровне
-        return true;
-
-    if (tree->left == NULL && tree->right == NULL) {            //Если ветки узла пустые, то сделаем следующее:
-        if (*leafLevel == 0) {                                  //Если уровень листа(какого-то одного) равен 0,            
-            *leafLevel = level;                                 //значит мы опустились вниз в первый раз и изменим это значение 
-            return true;                                        //на уровень данного листа (не важно какой именно, если в дальнейшем они все 
-        }                                                       //будут на одном уровне)
-        else {
-            return (level == *leafLevel);                       //Если не равен 0, то сверим с уровнем другого листа. Если не совпадают, то этот
-        }                                                       //и какой-то другой лист на разных уровнях
-    }
-    else {
-        return is_Level_Leaf(tree->left, level+1, leafLevel) && //Если же ветки не пустые, то проверим их
-        is_Level_Leaf(tree->right, level+1, leafLevel);
-    }
+bool check_leaf_level(struct node *root) {
+    dfs(root, 0);                                        //Узнаем уровень
+    return max_depth >= -1;                              
 }
 
 int main(void) {
@@ -57,7 +51,7 @@ int main(void) {
                 t = delete_node(t, value);
                 break;
             case 4:
-                if (is_Level_Leaf(t, 1, &leafLevel))  //Вывод об уровне деревьев
+                if (check_leaf_level(t))                      //Вывод об уровне деревьев
                     printf("Все листья находятся НА ОДНОМ уровне\n");
                 else
                     printf("Все листья находятся НЕ на одном уровне\n");
@@ -70,4 +64,6 @@ int main(void) {
         }
         print_menu();
     }
+    free_tree(t);                                         //освобождение памяти дерева
 }
+
