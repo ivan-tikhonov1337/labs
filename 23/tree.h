@@ -21,7 +21,7 @@ struct node* delete_node(struct node *root, int data);
 
 void print_tree(struct node *root, int n);
 
-bool is_Level_Leaf(struct node *tree, int level, int *leafLevel);
+void free_tree(struct node* root);
 
 void print_menu();
 
