@@ -4,12 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-struct node {                    //структура узла дерева
-    int data;
-    struct node *left;
-    struct node *right;
-};
-
 struct node* create_node(int data) {                                    //функция создания нового узла
     struct node *new_node = (struct node*) malloc(sizeof(struct node)); //выделение памяти под новый узел
     new_node->data = data;                                              //инициализация данных нового узла
