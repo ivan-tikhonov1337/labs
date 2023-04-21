@@ -2,7 +2,7 @@ CC = gcc
 DEGUGGER = gdb
 CFLAGS = -std=c17 -Wall -Werror
 FILE_OUT = tree.out
-SOURCES = main.c tree.c
+SOURCES = tree.c main.c
 
 all:
 	$(CC) $(CFLAGS) $(SOURCES) -o $(FILE_OUT)
