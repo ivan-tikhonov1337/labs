@@ -45,18 +45,19 @@ bool udt_push_front(udt *d, data t) {       // функция добавлени
     return true;                            // возвращение true
 }
 
-bool udt_push_front(udt *d, data t) {       // функция добавления элемента в начало массива
-    if (d->size == 10) {                    // если размер массива равен 10, то вернуть false
+bool udt_pop_front(udt *d) {
+    if (!d->size) {
         return false;
     }
-    if (!d->size) {                         // если размер массива равен 0, то начальное и конечное значения массива равны 0
-        d->first = d->last = 0;
-    } else {                                // иначе уменьшается индекс начала массива на 1
-        d->first = (10 + (d->first - 1) % 10) % 10;
+    if (d->size == 1) {
+        d->first = d->last = -1;
+        d->size--;
+        return true;
     }
-    d->arr[d->first] = t;                   // добавление элемента в начало массива
-    d->size++;                              // увеличение размера массива
-    return true;                            // возвращение true
+    d->first++;
+    d->first %= 10;
+    d->size--;
+    return true;
 }
 
 bool udt_pop_back(udt *d) {                 // функция удаления последнего элемента массива
