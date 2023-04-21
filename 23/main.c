@@ -4,26 +4,38 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int max_depth = -1;
-
-void dfs(struct node *root, int depth) {
-    if (root == NULL)                                     //Если NULL, то завершим выполнение функции
+void get_level(struct node* node, int level, int* leaf_level) { // Функция для получения уровня листьев
+    if (node == NULL) {
         return;
-    if (root->left == NULL && root->right == NULL) {     //Если лист, то узнаем глубину
-        if (max_depth == -1)                             //Проверка на первый лист
-            max_depth = depth;
-        else if (depth != max_depth) {                   //Проверка на тот же уровень остальных листов
-            max_depth = -2;
-            return;                                      //Если нашелся такой лист, то заверишм ф-цию
+    }
+    if (node->left == NULL && node->right == NULL) {
+        if (*leaf_level == 0) {                                 // Сохраняем уровень первого листа
+            *leaf_level = level;
+        } else if (*leaf_level != level) {                      // Если нашли лист на другом уровне, то дерево не удовлетворяет условию
+            return;
         }
     }
-    dfs(root->left, depth + 1);
-    dfs(root->right, depth + 1);
+    get_level(node->left, level + 1, leaf_level);               // Рекурсивный вызов для левого и правого поддерева
+    get_level(node->right, level + 1, leaf_level);
 }
 
-bool check_leaf_level(struct node *root) {
-    dfs(root, 0);                                        //Узнаем уровень
-    return max_depth >= -1;                              
+bool check_level(struct node* node, int level, int leaf_level) {// Функция для проверки того, что все листья находятся на одном уровне
+    if (node == NULL) {
+        return true;
+    }
+    if (node->left == NULL && node->right == NULL) {
+        if (level != leaf_level) {                              // Если нашли лист на другом уровне, то дерево не удовлетворяет условию
+            return false;
+        }
+    }        
+    return check_level(node->left, level + 1, leaf_level) &&    // Рекурсивный вызов для левого и правого поддерева
+    check_level(node->right, level + 1, leaf_level);
+}
+
+bool leaf_level_check(struct node* root) {                      // Функция для проверки, находятся ли все листья на одном уровне. 
+    int leaf_level = 0;                                         // Получаем уровень первого листа
+    get_level(root, 1, &leaf_level);                            // Проверяем, что все листья находятся на одном уровне
+    return check_level(root, 1, leaf_level);                    
 }
 
 int main(void) {
