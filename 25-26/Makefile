@@ -1,6 +1,6 @@
 CC ?= gcc
 CFLAGS ?= -Werror -pedantic
-main: main.o sort.o
+main: main.o deque.o
 	$(CC) -o main main.o deque.o
 
 main.o: main.c
