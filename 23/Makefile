@@ -1,20 +1,13 @@
-CC = gcc
-DEGUGGER = gdb
-CFLAGS = -std=c17 -Wall -Werror
-FILE_OUT = tree.out
-SOURCES = tree.c main.c
+CC ?= gcc
+CFLAGS ?= -Werror -pedantic
+main: main.o tree.o
+	$(CC) -o main main.o tree.o
 
-all:
-	$(CC) $(CFLAGS) $(SOURCES) -o $(FILE_OUT)
-	./$(FILE_OUT)
-	rm -f $(FILE_OUT)
+main.o: main.c
+	$(CC) $(CFLAGS) -c main.c
+
+tree.o: tree.c tree.h
+	$(CC) $(CFLAGS) -c tree.c
+
 clean:
-	rm -f *.out
-	rm -f a.exe
-debug:
-	$(CC) $(CFLAGS) -g $(SOURCES) 
-	sudo $(DEGUGGER) $(FILE_OUT)
-comp:
-	$(CC) $(CFLAGS) $(SOURCES) -o $(FILE_OUT)
-run:
-	./$(FILE_OUT)
+	rm -rf *.o main
