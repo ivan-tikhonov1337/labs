@@ -56,7 +56,7 @@ int main() {
     int c = 1, ans;
     udt *d = NULL;
     while (c) {
-        printf("1. Create deque\n2. Empty\n3. Size\n4. Push back\n5. Push front\n6. Top left\n7. Top right\n8.Pop back\n9. Pop front\n10.Print\n11. Sort\n12. Exit\\n");
+        printf("1. Create deque\n2. Empty\n3. Size\n4. Push back\n5. Push front\n6. Top left\n7. Top right\n8.Pop back\n9. Pop front\n10.Print\n11. Sort\n12. Exit\n");
         scanf("%d", &ans);
         switch (ans) {
             case 1: {
