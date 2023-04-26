@@ -43,11 +43,10 @@ int main(void) {
     int value;                                                  // Переменная, в которую мы записываем значение считанной вершины
     int action;                                                 // Переменная, которая считывает с клавиатуры команды меню
     print_menu();
+    printf("\nДействие: ");
     scanf("%d", &action);
     while (action) {                                            // Чтение символа из потока ввода
         value = 0;  
-        printf("\nДействие: ");
-        scanf("%d", &action);
         switch (action) {
             case 1:
                 printf("Введите значение элемента: ");
@@ -75,6 +74,8 @@ int main(void) {
                 break;
         }
         print_menu();
+        printf("\nДействие: ");
+        scanf("%d", &action);
     }
     free_tree(t);                                               // Освобождение памяти дерева
 }
