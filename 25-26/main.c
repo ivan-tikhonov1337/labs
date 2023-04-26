@@ -89,7 +89,7 @@ int main() {
                     printf("Print string\n");
                     scanf("%s", tb.value);
                     if (!udt_push_back(d, tb)) {                                              // Добавляем элемент в конец дека
-                        printf("Deq is full\n");
+                        printf("Deque is full\n");
                     }
                 }
                 break;
