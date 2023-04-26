@@ -65,15 +65,15 @@ int main() {
             }
             case 2: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
-                    udt_empty(d) ? printf("Deq is empty\n") : printf("Deq isn't empty\n");   // Проверяем, пуст ли дек
+                    udt_empty(d) ? printf("Deque is empty\n") : printf("Deque isn't empty\n");   // Проверяем, пуст ли дек
                 }
                 break;
             }
             case 3: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     printf("%d\n", udt_size(d));                                              // Выводим размер дека
                 }
@@ -81,7 +81,7 @@ int main() {
             }
             case 4: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     data tb;
                     printf("Print key\n");
@@ -96,7 +96,7 @@ int main() {
             }
             case 5: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     data tf;
                     printf("Print key\n");
@@ -104,17 +104,17 @@ int main() {
                     printf("Print string\n");
                     scanf("%s", tf.value);
                     if (!udt_push_front(d, tf)) {                                             // Добавляем элемент в начало дека
-                        printf("Deq is full\n");
+                        printf("Deque is full\n");
                     }
                 }
                 break;
             }
             case 6: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     if (udt_empty(d)) {
-                        printf("Deq is empty\n");
+                        printf("Deque is empty\n");
                     } else {
                         data a = udt_top_left(d);                                           // Получаем первый элемент
                         printf("Key\n%d\nValue\n%s\n", a.key, a.value);                 // Выводим ключ и значение элемента
@@ -124,10 +124,10 @@ int main() {
             }
             case 7: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     if (udt_empty(d)) {
-                        printf("Deq is empty\n");
+                        printf("Deque is empty\n");
                     } else {
                         data a = udt_top_right(d);                                          // Получаем последний элемент
                         printf("Key\n%d\nValue\n%s\n", a.key, a.value);                 // Выводим ключ и значение элемента
@@ -137,27 +137,27 @@ int main() {
             }
             case 8: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     if (!udt_pop_back(d)) {                                                // Удаляем последний элемент
-                        printf("Deq is empty\n");
+                        printf("Deque is empty\n");
                     }
                 }
                 break;
             }
             case 9: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     if (!udt_pop_front(d)) {                                               // Удаляем первый элемент
-                        printf("Deq is empty\n");
+                        printf("Deque is empty\n");
                     }
                 }
                 break;
             }
             case 10: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     udt_print(d);                                                         // Выводим все элементы дека
                 }
@@ -165,7 +165,7 @@ int main() {
             }
             case 11: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\n");
+                    printf("Deque doesn't exist\n");
                 } else {
                     d = sort(d);                                                          // Сортируем дек
                 }
