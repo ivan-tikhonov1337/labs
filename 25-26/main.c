@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "deq.h"
+#include "deque.h"
 #include <limits.h>
 
 #define INF INT_MAX
