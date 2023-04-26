@@ -65,99 +65,99 @@ int main() {
             }
             case 2: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
-                    udt_empty(d) ? printf("Deq is empty\\n") : printf("Deq isn't empty\\n");   // Проверяем, пуст ли дек
+                    udt_empty(d) ? printf("Deq is empty\n") : printf("Deq isn't empty\n");   // Проверяем, пуст ли дек
                 }
                 break;
             }
             case 3: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
-                    printf("%d\\n", udt_size(d));                                              // Выводим размер дека
+                    printf("%d\n", udt_size(d));                                              // Выводим размер дека
                 }
                 break;
             }
             case 4: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     data tb;
-                    printf("Print key\\n");
+                    printf("Print key\n");
                     scanf("%d", &tb.key);
-                    printf("Print string\\n");
+                    printf("Print string\n");
                     scanf("%s", tb.value);
                     if (!udt_push_back(d, tb)) {                                              // Добавляем элемент в конец дека
-                        printf("Deq is full\\n");
+                        printf("Deq is full\n");
                     }
                 }
                 break;
             }
             case 5: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     data tf;
-                    printf("Print key\\n");
+                    printf("Print key\n");
                     scanf("%d", &tf.key);
-                    printf("Print string\\n");
+                    printf("Print string\n");
                     scanf("%s", tf.value);
                     if (!udt_push_front(d, tf)) {                                             // Добавляем элемент в начало дека
-                        printf("Deq is full\\n");
+                        printf("Deq is full\n");
                     }
                 }
                 break;
             }
             case 6: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     if (udt_empty(d)) {
-                        printf("Deq is empty\\n");
+                        printf("Deq is empty\n");
                     } else {
                         data a = udt_top_left(d);                                           // Получаем первый элемент
-                        printf("Key\\n%d\\nValue\\n%s\\n", a.key, a.value);                 // Выводим ключ и значение элемента
+                        printf("Key\n%d\nValue\n%s\n", a.key, a.value);                 // Выводим ключ и значение элемента
                     }
                 }
                 break;
             }
             case 7: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     if (udt_empty(d)) {
-                        printf("Deq is empty\\n");
+                        printf("Deq is empty\n");
                     } else {
                         data a = udt_top_right(d);                                          // Получаем последний элемент
-                        printf("Key\\n%d\\nValue\\n%s\\n", a.key, a.value);                 // Выводим ключ и значение элемента
+                        printf("Key\n%d\nValue\n%s\n", a.key, a.value);                 // Выводим ключ и значение элемента
                     }
                 }
                 break;
             }
             case 8: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     if (!udt_pop_back(d)) {                                                // Удаляем последний элемент
-                        printf("Deq is empty\\n");
+                        printf("Deq is empty\n");
                     }
                 }
                 break;
             }
             case 9: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     if (!udt_pop_front(d)) {                                               // Удаляем первый элемент
-                        printf("Deq is empty\\n");
+                        printf("Deq is empty\n");
                     }
                 }
                 break;
             }
             case 10: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     udt_print(d);                                                         // Выводим все элементы дека
                 }
@@ -165,7 +165,7 @@ int main() {
             }
             case 11: {
                 if (d == NULL) {
-                    printf("Deq doesn't exist\\n");
+                    printf("Deq doesn't exist\n");
                 } else {
                     d = sort(d);                                                          // Сортируем дек
                 }
@@ -176,7 +176,7 @@ int main() {
                 break;
             }
             default: {
-                printf("Wrong answer\\n");                                                // Выводим сообщение об ошибке
+                printf("Wrong answer\n");                                                // Выводим сообщение об ошибке
             }
         }
     }
