@@ -14,20 +14,20 @@ udt* create_udt(udt *);
 
 bool udt_empty(const udt *);
 
-bool udt_push_front(udt *, int);
+int udt_size(const udt *);
 
 bool udt_push_back(udt *, int);
+
+bool udt_push_front(udt *, int);
 
 bool udt_pop_front(udt *);
 
 bool udt_pop_back(udt *);
 
-int udt_top_left(udt *);
+int udt_peek_front(udt *);
 
-int udt_top_right(udt *);
+int udt_peek_back(udt *);
 
 void udt_print(udt *);
-
-int udt_size(const udt *);
 
 #endif
