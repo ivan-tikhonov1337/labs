@@ -6,34 +6,36 @@
 #include <math.h>
 
 // Структура для представления комплексных чисел
-struct complex {
+typedef struct complexes {
     float real;
     float imaginary;
-};
+} Complex;
 
 // Структура для представления узлов списка
-struct node {
-    struct complex data;
+typedef struct node {
+    Complex data;
     struct node* next;
     struct node* prev;
-};
+} Node;
 
 // Функция для создания нового узла
-struct node* CreateNode(struct complex val);
+Node* CreateNode(Complex val);
+
+// Функция для вывода списка на экран
+void PrintList(Node* head);
 
 // Функция для вставки нового узла в начало списка
-struct node* InsertAtBeginning(struct node* head, struct complex val);
+Node* InsertAtBeginning(Node* head, Complex val);
 
 // Функция для вставки нового узла в конец списка
-struct node* InsertAtEnd(struct node* head, struct complex val);
+Node* InsertAtEnd(Node* head, Complex val);
 
 // Функция для удаления узла из списка
-struct node* DeleteNode(struct node* head, struct complex val);
-
+Node* DeleteNode(Node* head, Complex val);
 // Функция для подсчета длины списка
-int Length(struct node* head);
+int Length(Node* head);
 
 // Функция для дополнения списка до указанной длины копиями переданного значения
-struct node* AddToLength(struct node* head, struct complex val, int k);
+Node* AddToLength(Node* head, Complex val, int k);
  
 #endif
