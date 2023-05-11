@@ -1,3 +1,4 @@
+include "two-sided_list.h"
 // Функция для создания нового узла списка
 struct node* CreateNode(float val) {
     struct node* newNode = (struct node*)malloc(sizeof(struct node)); // выделение памяти для нового узла
