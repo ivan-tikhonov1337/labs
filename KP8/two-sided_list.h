@@ -3,32 +3,37 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-// Определение структуры узла списка
-struct node {
-    float data;                                 // данные, которые хранятся в узле
-    struct node *next;                          // указатель на следующий узел
-    struct node *prev;                          // указатель на предыдущий узел
+// Структура для представления комплексных чисел
+struct complex {
+    float real;
+    float imaginary;
 };
 
-// Функция для создания нового узла списка
-struct node* CreateNode(float val);
+// Структура для представления узлов списка
+struct node {
+    struct complex data;
+    struct node* next;
+    struct node* prev;
+};
 
-// Функция для вывода списка на экран
-void PrintList(struct node* head);
+// Функция для создания нового узла
+struct node* CreateNode(struct complex val);
 
 // Функция для вставки нового узла в начало списка
-struct node* InsertAtBeginning(struct node* head, float val;
+struct node* InsertAtBeginning(struct node* head, struct complex val);
 
 // Функция для вставки нового узла в конец списка
-struct node* InsertAtEnd(struct node* head, float val);
-                               
+struct node* InsertAtEnd(struct node* head, struct complex val);
+
 // Функция для удаления узла из списка
-struct node* DeleteNode(struct node* head, float val);
+struct node* DeleteNode(struct node* head, struct complex val);
 
 // Функция для подсчета длины списка
-int Length(struct node* head;
+int Length(struct node* head);
 
-struct node* AddToLength(struct node* head, float val, int k);
+// Функция для дополнения списка до указанной длины копиями переданного значения
+struct node* AddToLength(struct node* head, struct complex val, int k);
  
 #endif
