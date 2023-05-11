@@ -5,8 +5,8 @@
 
 // Главная функция
 int main() {
-    struct node* head = NULL;
-    struct complex val;
+    Node* head = NULL;
+    Complex val;
     int choice, k;
 
     printf("\nВведите номер операции:\n");
