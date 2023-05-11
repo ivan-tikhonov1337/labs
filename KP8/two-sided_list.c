@@ -1,7 +1,8 @@
 include "two-sided_list.h"
+
 // Функция для создания нового узла
-struct node* CreateNode(struct complex val) {
-    struct node* newNode = (struct node*)malloc(sizeof(struct node));    // выделение памяти для нового узла
+Node* CreateNode(Complex val) {
+    Node* newNode = (Node*)malloc(sizeof(Node));    // выделение памяти для нового узла
     newNode->data = val;                     // присвоение значению нового узла переданного значения
     newNode->prev = NULL;                    // указатель на предыдущий узел нового узла = NULL
     newNode->next = NULL;                    // указатель на следующий узел нового узла = NULL
@@ -9,16 +10,17 @@ struct node* CreateNode(struct complex val) {
 }
 
 // Функция для вывода списка на экран
-void PrintList(struct node* head) {
+void PrintList(Node* head) {
     while(head != NULL) {
         printf("%.2f + %.2fi    ", head->data.real, head->data.imaginary);// вывод значения текущего узла на экран
         head = head->next;                                                // переход к следующему узлу
-    }    
+    }
+    printf("\n");
 }
 
 // Функция для вставки нового узла в начало списка
-struct node* InsertAtBeginning(struct node* head, struct complex val) {
-    struct node* newNode = CreateNode(val);    // создание нового узла
+Node* InsertAtBeginning(Node* head, Complex val) {
+    Node* newNode = CreateNode(val);    // создание нового узла
     if(head == NULL) {                         // если список пуст
         head = newNode;                        // то созданный узел становится первым
     }
@@ -31,13 +33,13 @@ struct node* InsertAtBeginning(struct node* head, struct complex val) {
 }
 
 // Функция для вставки нового узла в конец списка
-struct node* InsertAtEnd(struct node* head, struct complex val) {
-    struct node* newNode = CreateNode(val);    // создание нового узла
+Node* InsertAtEnd(Node* head, Complex val) {
+    Node* newNode = CreateNode(val);    // создание нового узла
     if(head == NULL) {                         // если список пуст
         head = newNode;                        // то созданный узел становится первым
     }
     else {
-        struct node* temp = head;             // временный указатель на первый узел списка
+        Node* temp = head;             // временный указатель на первый узел списка
         while(temp->next != NULL) {           // цикл, пока не будет найден последний узел списка
             temp = temp->next;                // переход к следующему узлу
         }
@@ -48,8 +50,8 @@ struct node* InsertAtEnd(struct node* head, struct complex val) {
 }
 
 // Функция для удаления узла из списка
-struct node* DeleteNode(struct node* head, struct complex val) {
-    struct node* temp = head;                                                    // временный указатель на первый узел списка
+Node* DeleteNode(Node* head, Complex val) {
+    Node* temp = head;                                                    // временный указатель на первый узел списка
     if(head->data.real == val.real && head->data.imaginary == val.imaginary) {   // если значение первого узла списка соответствует переданному значению
         head = head->next;                                                       // первый узел списка становится следующим узлом
         free(temp);                                                              // удаляется первый узел списка
@@ -62,7 +64,7 @@ struct node* DeleteNode(struct node* head, struct complex val) {
         printf("Значение не найдено\n");
     }
     else {
-        struct node* delNode = temp->next;                                       // временный указатель на удаляемый узел
+        Node* delNode = temp->next;                                       // временный указатель на удаляемый узел
         temp->next = delNode->next;                                              // указатель на следующий узел предыдущего узла = следующий узел удаляемого узла
         if(delNode->next != NULL) {
             delNode->next->prev = temp;                                          // указатель на предыдущий узел следующего узла удаляемого узла = предыдущему узлу удаляемого узла
@@ -73,7 +75,7 @@ struct node* DeleteNode(struct node* head, struct complex val) {
 }
 
 // Функция для подсчета длины списка
-int Length(struct node* head) {
+int Length(Node* head) {
     int count = 0;                                                               // счетчик узлов
     while(head != NULL) {                                                        // цикл, пока не будет достигнут конец списка
         count++;                                                                 // увеличение счетчика
@@ -83,7 +85,7 @@ int Length(struct node* head) {
 }
 
 // Функция для дополнения списка до указанной длины копиями переданного значения
-struct node* AddToLength(struct node* head, struct complex val, int k) {    
+Node* AddToLength(Node* head, Complex val, int k) {    
     int len = Length(head);                                                      // длина списка
     if(len >= k) {                                                               // если длина списка больше или равна заданной длине
         printf("Длина списка меньше введённого значения\n");
