@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "two-sided_list.h"
+
 // Главная функция
 int main() {
     struct node* head = NULL;                  // указатель на первый узел списка = NULL (список пуст)
