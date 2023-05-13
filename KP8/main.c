@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 #include "two-sided_list.h"
 
 // Главная функция
 int main() {
     Node* head = NULL;
     Complex val;
-    int choice, k;
-
-    printf("\nВведите номер операции:\n");
-    while(1) {
+    int choice, k, index;
+    printf("*Вставка по индексу начинается с 0\n");
+    printf("Введите номер операции:\n");
+    bool running = true;
+    while(running) {
         printf("1. Вывести список\n");
-        printf("2. Вставить в начало\n");
-        printf("3. Вставить в конец\n");
-        printf("4. Удалить элемент\n");
-        printf("5. Подсчитать длину списка\n");
-        printf("6. Дополнить список копиями\n");
-        printf("7. Выход\n");
-
+        printf("2. Вставить элемент по индексу\n");
+        printf("3. Удалить элемент по индексу\n");
+        printf("4. Подсчитать длину списка\n");
+        printf("5. Дополнить список копиями\n");
+        printf("6. Выход\n");
         scanf("%d", &choice);                     // ввод выбора пользователя
         switch(choice) {                          // выбор действия в зависимости от ввода пользователя
             case 1:                               // вывод списка
@@ -26,35 +26,34 @@ int main() {
                 PrintList(head);
                 break;
             case 2:                               // добавление элемента в начало
+                printf("Введите индекс на место которого хотите вставить элемент: ");
+                scanf("%d", &index);
                 printf("Введите комплексное число (действительную и мнимую части через пробел): ");
                 scanf("%f %f", &val.real, &val.imaginary);
-                head = InsertAtBeginning(head, val);
+                head = InsertAtIndex(head, val, index);
                 break;
             case 3:                               // добавление элемента в конец
-                printf("Введите комплексное число (действительную и мнимую части через пробел): ");
-                scanf("%f %f", &val.real, &val.imaginary);
-                head = InsertAtEnd(head, val);
+                printf("Введите индекс элемента, который хотите удалить: ");
+                scanf("%d", &index);
+                head = DeleteAtIndex(head, index);
                 break;
-            case 4:                               // удаление элемента
-                printf("Введите комплексное число (действительную и мнимую части через пробел) для удаления: ");
-                scanf("%f %f", &val.real, &val.imaginary);
-                head = DeleteNode(head, val);
-                break;
-            case 5:                               // длина списка
+            case 4:                               // длина списка
                 printf("Длина списка: %d\n", Length(head));
                 break;
-            case 6:                               // дополнение копиями
+            case 5:                               // дополнение копиями
                 printf("Введите желаемую длину списка:\n");
                 scanf("%d", &k);
                 printf("Введите комплексное число (действительную и мнимую части через пробел) для вставки: ");
                 scanf("%f %f", &val.real, &val.imaginary);
                 head = AddToLength(head, val, k); // дополнение списка копиями переданного значения
                 break;
-            case 7:
-                exit(0);                          // завершение программы
+            case 6:
+                running = false;                  // завершение программы
+                break;
             default:
-                printf("Некорректный ввод. Попробуйте еще раз\n");
+                printf("Некорректный ввод. Попробуйте еще раз\n"); 
         }
     }
+    DeleteList(head);
     return 0;
 }
