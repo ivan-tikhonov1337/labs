@@ -19,6 +19,9 @@ typedef struct node {
     struct node* prev;
 } Node;
 
+// Функция для вставки нового узла в конец списка
+Node* InsertAtEnd(Node* head, Complex val);
+
 // Функция для создания нового узла
 Node* CreateNode(Complex val);
 
