@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 
 // Структура для представления комплексных чисел
 typedef struct complexes {
@@ -24,18 +25,18 @@ Node* CreateNode(Complex val);
 // Функция для вывода списка на экран
 void PrintList(Node* head);
 
-// Функция для вставки нового узла в начало списка
-Node* InsertAtBeginning(Node* head, Complex val);
-
-// Функция для вставки нового узла в конец списка
-Node* InsertAtEnd(Node* head, Complex val);
-
 // Функция для удаления узла из списка
-Node* DeleteNode(Node* head, Complex val);
+Node* DeleteAtIndex(Node* head, int index);
+
+
 // Функция для подсчета длины списка
 int Length(Node* head);
 
 // Функция для дополнения списка до указанной длины копиями переданного значения
 Node* AddToLength(Node* head, Complex val, int k);
+
+void DeleteList(Node* head);
+
+Node* InsertAtIndex(Node* head, Complex val, int index);
  
 #endif
