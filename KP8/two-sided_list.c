@@ -1,4 +1,4 @@
-include "two-sided_list.h"
+#include "two-sided_list.h"
 
 // Функция для создания нового узла
 Node* CreateNode(Complex val) {
@@ -12,67 +12,44 @@ Node* CreateNode(Complex val) {
 // Функция для вывода списка на экран
 void PrintList(Node* head) {
     while(head != NULL) {
-        printf("%.2f + %.2fi    ", head->data.real, head->data.imaginary);// вывод значения текущего узла на экран
+        if (head->data.imaginary >= 0) 
+            printf("%.2f + %.2fi    ", head->data.real, head->data.imaginary);// вывод значения текущего узла на экран
+        else
+            printf("%.2f %.2fi    ", head->data.real, head->data.imaginary);
         head = head->next;                                                // переход к следующему узлу
     }
     printf("\n");
 }
 
-// Функция для вставки нового узла в начало списка
-Node* InsertAtBeginning(Node* head, Complex val) {
-    Node* newNode = CreateNode(val);    // создание нового узла
-    if(head == NULL) {                         // если список пуст
-        head = newNode;                        // то созданный узел становится первым
-    }
-    else {                                     // если список не пуст
-        head->prev = newNode;                  // указатель на предыдущий узел текущего первого узла = новый узел
-        newNode->next = head;                  // указатель на следующий узел нового узла = текущий первый узел
-        head = newNode;                        // новый узел становится первым
-    }
-    return head;
-}
-
-// Функция для вставки нового узла в конец списка
-Node* InsertAtEnd(Node* head, Complex val) {
-    Node* newNode = CreateNode(val);    // создание нового узла
-    if(head == NULL) {                         // если список пуст
-        head = newNode;                        // то созданный узел становится первым
-    }
-    else {
-        Node* temp = head;             // временный указатель на первый узел списка
-        while(temp->next != NULL) {           // цикл, пока не будет найден последний узел списка
-            temp = temp->next;                // переход к следующему узлу
-        }
-        temp->next = newNode;                 // указатель на следующий узел последнего узла списка = новый узел
-        newNode->prev = temp;                 // указатель на предыдущий узел нового узла = последний узел списка
-    }
-    return head;                              // возвращает указатель на первый узел списка
-}
-
 // Функция для удаления узла из списка
-Node* DeleteNode(Node* head, Complex val) {
-    Node* temp = head;                                                    // временный указатель на первый узел списка
-    if(head->data.real == val.real && head->data.imaginary == val.imaginary) {   // если значение первого узла списка соответствует переданному значению
-        head = head->next;                                                       // первый узел списка становится следующим узлом
-        free(temp);                                                              // удаляется первый узел списка
-        return head;                                                             // возвращает указатель на новый первый узел списка
-    }
-    while(temp->next != NULL && (temp->next->data.real != val.real || temp->next->data.imaginary != val.imaginary)) {// цикл, пока не будет найден узел со значением, равным переданному
-        temp = temp->next;                                                       // переход к следующему узлу
-    }
-    if(temp->next == NULL) {                                                     // элемент не найден
-        printf("Значение не найдено\n");
+Node* DeleteAtIndex(Node* head, int index) {
+    Node* temp = head;                              // временный указатель на первый узел списка
+    if(index == 0) {                               // если нужно удалить первый элемент списка
+        head = head->next;                           // первый узел списка становится следующим узлом
+        if(head != NULL) {                           // если список не пуст
+            head->prev = NULL;                        // устанавливаем указатель на предыдущий элемент нового первого элемента списка на NULL
+        }
+        free(temp);                                   // удаляем первый узел списка
+        return head;                                  // возвращает указатель на новый первый узел списка
     }
     else {
-        Node* delNode = temp->next;                                       // временный указатель на удаляемый узел
-        temp->next = delNode->next;                                              // указатель на следующий узел предыдущего узла = следующий узел удаляемого узла
-        if(delNode->next != NULL) {
-            delNode->next->prev = temp;                                          // указатель на предыдущий узел следующего узла удаляемого узла = предыдущему узлу удаляемого узла
+        for(int i = 0; i < index - 1; i++) {        // переход к узлу, предшествующему индексу удаления
+            if(temp->next == NULL) {                 // если достигнут конец списка
+                printf("Индекс вне диапазона списка\\\\n");
+                return head;                       // возвращает указатель на первый узел списка
+            }
+            temp = temp->next;
         }
-        free(delNode);                                                           // удаляется узел
+        Node* nodeToDelete = temp->next;            // временный указатель на узел, который нужно удалить
+        temp->next = nodeToDelete->next;            // переназначаем указатель на следующий элемент в узле, предшествующему удаляемому узлу
+        if(nodeToDelete->next != NULL) {             // если удаляемый узел не последний в списке
+            nodeToDelete->next->prev = temp;           // переназначаем указатель на предыдущий элемент в следующем узле
+        }
+        free(nodeToDelete);                          // удаляем узел
+        return head;                                  // возвращает указатель на первый узел списка
     }
-    return head;                                                                 // возвращает указатель на первый узел списка
 }
+
 
 // Функция для подсчета длины списка
 int Length(Node* head) {
@@ -88,7 +65,7 @@ int Length(Node* head) {
 Node* AddToLength(Node* head, Complex val, int k) {    
     int len = Length(head);                                                      // длина списка
     if(len >= k) {                                                               // если длина списка больше или равна заданной длине
-        printf("Длина списка меньше введённого значения\n");
+        printf("Длина списка больше введённого значения\n");
         return head;                                                             // возвращает указатель на первый узел списка
     }
     int count = k - len;                                                         // количество узлов, которые нужно добавить
@@ -97,4 +74,44 @@ Node* AddToLength(Node* head, Complex val, int k) {
         count--;                                                                 // уменьшение счетчика
     }
     return head;                                                                 // возвращает указатель на первый узел списка
+}
+
+void DeleteList(Node* head) {
+    Node* temp = NULL;
+    while(head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+Node* InsertAtIndex(Node* head, Complex val, int index) {
+    Node* newNode = (Node*)malloc(sizeof(Node));   // создание нового узла
+    newNode->data = val;                           // присваивание переданного значения в узел
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    if(index == 0) {                              // если нужно вставить элемент в начало списка
+        newNode->next = head;                      // устанавливаем указатель на следующий элемент нового узла на первый элемент старого списка
+        if(head != NULL) {                         // если старый список был не пуст
+            head->prev = newNode;                   // устанавливаем указатель на предыдущий элемент первого элемента старого списка на новый узел
+        }
+        head = newNode;                             // новый узел становится первым элементом списка
+    }
+    else {                                         // если нужно вставить элемент в середину или конец списка
+        Node* temp = head;
+        for(int i = 0; i < index - 1; i++) {        // переход к узлу, предшествующему индексу вставки
+            if(temp->next == NULL) {                 // если достигнут конец списка
+                printf("Индекс вне диапазона списка\n");
+                return head;                       // возвращает указатель на первый узел списка
+            }
+            temp = temp->next;
+        }
+        newNode->next = temp->next;                 // устанавливаем указатель на следующий элемент нового узла на элемент, следующий за узлом, предшествующим индексу вставки
+        newNode->prev = temp;                       // устанавливаем указатель на предыдущий элемент нового узла на узел, предшествующий индексу вставки
+        if(temp->next != NULL) {                     // если не вставляем в конец списка
+            temp->next->prev = newNode;               // устанавливаем указатель на предыдущий элемент следующего элемента за узлом, предшествующим индексу вставки, на новый узел
+        }
+        temp->next = newNode;                        // устанавливаем указатель на следующий элемент узла, предшествующего индексу вставки, на новый узел
+    }
+    return head;                                     // возвращает указатель на первый узел списка
 }
