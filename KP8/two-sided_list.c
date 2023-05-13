@@ -1,5 +1,22 @@
 #include "two-sided_list.h"
 
+// Функция для вставки нового узла в конец списка
+Node* InsertAtEnd(Node* head, Complex val) {
+    Node* newNode = CreateNode(val);    // создание нового узла
+    if(head == NULL) {                         // если список пуст
+        head = newNode;                        // то созданный узел становится первым
+    }
+    else {
+        Node* temp = head;             // временный указатель на первый узел списка
+        while(temp->next != NULL) {           // цикл, пока не будет найден последний узел списка
+            temp = temp->next;                // переход к следующему узлу
+        }
+        temp->next = newNode;                 // указатель на следующий узел последнего узла списка = новый узел
+        newNode->prev = temp;                 // указатель на предыдущий узел нового узла = последний узел списка
+    }
+    return head;                              // возвращает указатель на первый узел списка
+}
+
 // Функция для создания нового узла
 Node* CreateNode(Complex val) {
     Node* newNode = (Node*)malloc(sizeof(Node));    // выделение памяти для нового узла
