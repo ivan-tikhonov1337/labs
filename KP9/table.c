@@ -1,3 +1,4 @@
+#include "table.h"
 void print_table(struct node table[], int size) {
     int i;
     printf("Таблица:\n");
