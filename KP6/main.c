@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <base.h>
 
 int main(int argc, char *argv[]) {
     int number;
