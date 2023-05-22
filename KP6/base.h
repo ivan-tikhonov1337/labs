@@ -40,3 +40,5 @@ void delete_passenger(Passenger *passengers, int *n;
 void select_passenger(Passenger *passengers, int n);
 
 void filter_by_num(Passenger *passengers, int n, int num_items);
+
+#endif
