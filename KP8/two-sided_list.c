@@ -1,5 +1,27 @@
 #include "two-sided_list.h"
 
+// Функция для создания нового узла
+Node* CreateNode(Complex val) {
+    Node* newNode = (Node*)malloc(sizeof(Node));    // выделение памяти для нового узла
+    newNode->data = val;                     // присвоение значению нового узла переданного значения
+    newNode->prev = NULL;                    // указатель на предыдущий узел нового узла = NULL
+    newNode->next = NULL;                    // указатель на следующий узел нового узла = NULL
+    return newNode;                          // возвращает указатель на созданный узел
+}
+
+// Функция для вывода списка на экран
+void PrintList(Node* head) {
+    while(head != NULL) {
+        if (head->data.imaginary >= 0) 
+            printf("%.2f + %.2fi    ", head->data.real, head->data.imaginary);// вывод значения текущего узла на экран
+        else
+            printf("%.2f %.2fi    ", head->data.real, head->data.imaginary);
+        head = head->next;                                                // переход к следующему узлу
+    }
+    printf("\n");
+}
+
+
 // Функция для вставки нового узла в конец списка
 Node* InsertAtEnd(Node* head, Complex val) {
     Node* newNode = CreateNode(val);    // создание нового узла
@@ -82,6 +104,10 @@ void DeleteList(Node* head) {
 }
 
 Node* InsertAtIndex(Node* head, Complex val, int index) {
+    if (index != 0 && Length(head) == 0) {
+        printf("Введено неправильное значение индекса(ожидалось 0)\n");
+        return head;
+    }
     Node* newNode = (Node*)malloc(sizeof(Node));   // создание нового узла
     newNode->data = val;                           // присваивание переданного значения в узел
     newNode->next = NULL;
