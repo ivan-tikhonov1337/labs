@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
     Passenger passengers[DB_SIZE];
     int n = 0;
-
+    char *filename = argv[1];
     FILE *in = fopen(argv[1], "r");
     if (!in) {
         printf("I/O Error: can't open file.\n");
@@ -36,10 +36,10 @@ int main(int argc, char *argv[]) {
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                insert_passenger(passengers, &n);
+                insert_passenger(passengers, &n, filename);
                 break;
             case 2:
-                delete_passenger(passengers, &n);
+                delete_passenger(passengers, &n, filename);
                 break;
             case 3:
                 select_passenger(passengers, n);
