@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+
 #define STR_SIZE 24
 #define DB_SIZE 100
 
@@ -25,6 +26,8 @@ typedef struct {
 
 int passenger_read_txt(Passenger *s, FILE *in);
 
+int passenger_write_txt(Passenger *s, FILE *out);
+
 int passenger_read_bin(Passenger *s, FILE *in);
 
 void passenger_write_bin(Passenger *s, FILE *out);
@@ -33,9 +36,9 @@ void print_passenger(Passenger p);
 
 void print_passengers(Passenger *passengers, int n);
 
-void insert_passenger(Passenger *passengers, int *n);
+void insert_passenger(Passenger *passengers, int *n, char *filename);
 
-void delete_passenger(Passenger *passengers, int *n;
+void delete_passenger(Passenger *passengers, int *n, char *filename);
 
 void select_passenger(Passenger *passengers, int n);
 
