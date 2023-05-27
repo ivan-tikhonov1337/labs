@@ -59,6 +59,6 @@ int main(int argc, char *argv[]) {
                 printf("Выбрано не существующие действие.\n");
         }
     }
-
+    fclose(in);
     return 0;
 }
