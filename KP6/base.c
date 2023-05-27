@@ -1,3 +1,5 @@
+#include "base.h"
+
 int passenger_read_txt(Passenger *s, FILE *in)
 {
     fscanf(in, "%s", s->surname);
