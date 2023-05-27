@@ -1,7 +1,6 @@
 #include "base.h"
 
-int passenger_read_txt(Passenger *s, FILE *in)
-{
+int passenger_read_txt(Passenger *s, FILE *in) {
     fscanf(in, "%s", s->surname);
     fscanf(in, "%s", s->initials);
     fscanf(in, " %d", &(s->num));
@@ -13,8 +12,19 @@ int passenger_read_txt(Passenger *s, FILE *in)
     return !feof(in);
 }
 
-int passenger_read_bin(Passenger *s, FILE *in)
-{
+int passenger_write_txt(Passenger *s, FILE *out) {
+    fprintf(out, "%s ", s->surname);
+    fprintf(out, "%s ", s->initials);
+    fprintf(out, " %d ", (s->num));
+    fprintf(out, "%d ", (s->weight));
+    fprintf(out, "%s ", s->to);
+    fprintf(out, "%d:%d ", (s->time.hour), (s->time.minute));
+    fprintf(out, "%d ", (s->transfer));
+    fprintf(out, "%d \n", (s->child));
+    return !feof(out);
+}
+
+int passenger_read_bin(Passenger *s, FILE *in) {
     fread(s->surname,  sizeof(char), STR_SIZE, in);
     fread(s->initials, sizeof(char), STR_SIZE, in);
     fread(&(s->num), sizeof(int), 1, in);
@@ -27,8 +37,7 @@ int passenger_read_bin(Passenger *s, FILE *in)
     return !feof(in);
 }
 
-void passenger_write_bin(Passenger *s, FILE *out)
-{
+void passenger_write_bin(Passenger *s, FILE *out) {
     fwrite(s->surname,  sizeof(char), STR_SIZE, out);
     fwrite(s->initials, sizeof(char), STR_SIZE, out);
     fwrite(&(s->num), sizeof(int), 1, out);
@@ -52,7 +61,7 @@ void print_passengers(Passenger *passengers, int n) {
     printf("+------------+------------+-------+---------+-----------------+-------+----------+-------+\n");
 }
 
-void insert_passenger(Passenger *passengers, int *n) {
+void insert_passenger(Passenger *passengers, int *n, char *filename) {
     Passenger p;
     printf("Введите данные о новом пассажире:\n");
     printf("Фамилия: ");
@@ -73,9 +82,13 @@ void insert_passenger(Passenger *passengers, int *n) {
     scanf("%d", &p.child);
     passengers[*n] = p;
     (*n)++;
+    FILE *out = fopen(filename, "a");
+    fprintf(out, "\n ");
+    passenger_write_txt(&p, out);
+    fclose(out);    
 }
 
-void delete_passenger(Passenger *passengers, int *n) {
+void delete_passenger(Passenger *passengers, int *n, char *filename) {
     printf("Введите фамилию пассажира, которого нужно удалить: ");
     char surname[STR_SIZE];
     scanf("%s", surname);
@@ -93,6 +106,11 @@ void delete_passenger(Passenger *passengers, int *n) {
         passengers[j] = passengers[j + 1];
     }
     (*n)--;
+    FILE *out = fopen(filename, "w");
+    for (int i = 0; i < *n; i++) {
+        passenger_write_txt(&passengers[i], out);
+    }
+    fclose(out);
 }
 
 void select_passenger(Passenger *passengers, int n) {
