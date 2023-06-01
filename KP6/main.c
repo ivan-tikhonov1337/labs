@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     while (passenger_read_txt(&passengers[n], in)) {
         n++;
     }
-
+    fclose(in);
     while (1) {
         printf("Выберите действие, которое хотите выполнить:\n");
         printf("1. Добавить пассажира\n");
@@ -59,6 +59,5 @@ int main(int argc, char *argv[]) {
                 printf("Выбрано не существующие действие.\n");
         }
     }
-    fclose(in);
     return 0;
 }
