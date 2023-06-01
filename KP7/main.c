@@ -5,30 +5,31 @@
 
 #include "spmatrix.h"
 
-void startMenu(void) {
-    printf("1. Ввести новую матрицу.\n");
+void Start_Menu(void) {
+    printf("\n1. Ввести новую матрицу.\n");
     printf("2. Выбрать матрицу из списка.\n");
     printf("3. Выход.\n");
 }
 
-void chooseMatrix(sparseMatrix** matrixList) {
+void Choose_Matrix(sparseMatrix** matrixList) {
     for (int i = 0; i < MAX_SIZE; i++) {
-        if (matrixList[i] == NULL || isNilElement(&matrixList[i]->vector[0])) {
+        if (matrixList[i] == NULL || Is_Nil_Element(&matrixList[i]->vector[0])) {
             break;
         }
         printf("%3d)\n", i + 1);
-        printSparseAsDense(matrixList[i]);
+        Print_Sparse_As_Dense(matrixList[i]);
     }
     printf("Выберите матрицу: ");
 }
 
-void actionMenu(void)
+void Action_Menu(void)
 {
-    printf("    1. Умножить матрицу на число.\n");
-    printf("    2. Разделить на максимальный элемент матрицы.\n");
-    printf("    3. Напечатать разреженную матрицу.\n");
-    printf("    4. Напечатать матрицу.\n");
-    printf("    5. Выход.\n");
+    printf("\n1. Умножить матрицу на число.\n");
+    printf("2. Разделить на максимальный элемент матрицы.\n");
+    printf("3. Напечатать разреженную матрицу.\n");
+    printf("4. Напечатать матрицу.\n");
+    printf("5. Добавить матрицу в список.\n");
+    printf("6. Выход.\n");
 }
 
 int main(int argc, char** argv)
@@ -56,35 +57,35 @@ int main(int argc, char** argv)
 
     if ( isFile ) {
         while ( true ) {
-            sparseMatrix* matrix = initSparseMatrix();
+            sparseMatrix* matrix = Init_Sparse_Matrix();
             int readRet = 0;
-            readRet = readSparseMatrix(matrix, inputStream);
+            readRet = Read_Sparse_Matrix(matrix, inputStream);
             if ( readRet != 1 ) {
                 if ( readRet == -3 ) { // Matrix was too big
-                    freeSparseMatrix(matrix);
+                    Free_Sparse_Matrix(matrix);
                     continue;
                 }
                 break;
             }
-            addToList(matrixList, matrix);
+            Add_To_List(matrixList, matrix);
         }
         fclose(inputStream);
     } 
     int option;
     do {
-        startMenu();
+        Start_Menu();
         scanf("%d", &option);
         switch (option) {
             case 1: {
-                sparseMatrix* matrix = initSparseMatrix();
-                readSparseMatrix(matrix, stdin);
-                addToList(matrixList, matrix);
+                sparseMatrix* matrix = Init_Sparse_Matrix();
+                Read_Sparse_Matrix(matrix, stdin);
+                Add_To_List(matrixList, matrix);
                 printf("Added.\n");
                 break;
             }
             case 2: {
                 int matrixChoice;
-                chooseMatrix(matrixList);
+                Choose_Matrix(matrixList);
                 scanf("%d", &matrixChoice);
                 if (matrixChoice < 1) {
                     fprintf(stderr, "Неправильный ввод.\n");
@@ -96,51 +97,54 @@ int main(int argc, char** argv)
                     break;
                 }
                 do {
-                    actionMenu();
+                    Action_Menu();
                     scanf("%d", &matrixChoice);
                     switch (matrixChoice) {
-                        case 1: { // Multiply by a value
-                            int coeff;
+                        case 1: { 
+                            double coeff;
                             printf("Введите коэффициент: ");
-                            scanf("%d", &coeff);
-                            multiplyByConstant(currentMatrix, coeff);
+                            scanf("%lf", &coeff);
+                            Multiply_By_Constant(currentMatrix, coeff);
                             break;
                         }
                         case 2: {
-                            double a; // Coefficient
-                            a = findMaxInMatrix(currentMatrix);
-                            multiplyByConstant(currentMatrix, 1/a);
-                            addToList(matrixList, currentMatrix);
+                            double coeff; 
+                            coeff = Find_Max_In_Matrix(currentMatrix);
+                            Multiply_By_Constant(currentMatrix, 1/coeff);
                             break;
                         }
                         case 3: {
-                            printSparseMatrix(currentMatrix);
+                            Print_Sparse_Matrix(currentMatrix);
                             break;
                         }
                         case 4: {
-                            printSparseAsDense(currentMatrix);
+                            Print_Sparse_As_Dense(currentMatrix);
                             break;
                         }
                         case 5: {
+                            Add_To_List(matrixList, currentMatrix);
+                            printf("Матрица добавлена в список матриц\n");
+                            break;
+                        }
+                        case 6: {
                             break;
                         }
                     }
-                } while (matrixChoice != 0);
+                } while (matrixChoice != 6);
                 break;
             }
             case 3: {
                 break;
             }
         }
-    } while (option != 0);
+    } while (option != 3);
 
     for (int i = 0; i < MAX_SIZE; i++) {
         if ( matrixList[i] == NULL ) {
             break;
         }
-        freeSparseMatrix(matrixList[i]);
+        Free_Sparse_Matrix(matrixList[i]);
     }
     free(matrixList);
-    
     return 0;
 }
