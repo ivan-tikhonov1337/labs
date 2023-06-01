@@ -62,43 +62,58 @@ void print_passengers(Passenger *passengers, int n) {
 }
 
 void insert_passenger(Passenger *passengers, int *n, char *filename) {
+    int go = 1;
     Passenger p;
     printf("Введите данные о новом пассажире:\n");
     printf("Фамилия: ");
     scanf("%s", p.surname);
     printf("Инициалы: ");
     scanf("%s", p.initials);
-    printf("Количество вещей: ");
-    scanf("%d", &p.num);
-    printf("Вес багажа: ");
-    scanf("%d", &p.weight);
-    printf("Куда: ");
-    scanf("%s", p.to);
-    printf("Время (чч:мм): ");
-    scanf("%d:%d", &p.time.hour, &p.time.minute);
-    printf("Пересадки: ");
-    scanf("%d", &p.transfer);
-    printf("Дети: ");
-    scanf("%d", &p.child);
-    passengers[*n] = p;
-    (*n)++;
-    FILE *out = fopen(filename, "a");
-    passenger_write_txt(&p, out);
-    fclose(out);    
+    for (int i = 0; i < *n; i++) {
+        if (strcmp(passengers[i].surname, p.surname) == 0) {
+            if (strcmp(passengers[i].initials, p.initials) == 0) {
+                printf("Такой пассажир уже существует.");
+            go = 0;
+            break;
+            }
+        }
+    }
+    if (go) {
+        printf("Количество вещей: ");
+        scanf("%d", &p.num);
+        printf("Вес багажа: ");
+        scanf("%d", &p.weight);
+        printf("Куда: ");
+        scanf("%s", p.to);
+        printf("Время (чч:мм): ");
+        scanf("%d:%d", &p.time.hour, &p.time.minute);
+        printf("Пересадки: ");
+        scanf("%d", &p.transfer);
+        printf("Дети: ");
+        scanf("%d", &p.child);
+        passengers[*n] = p;
+        (*n)++;
+        FILE *out = fopen(filename, "a");
+        passenger_write_txt(&p, out);
+        fclose(out); 
+    }   
 }
 
 void delete_passenger(Passenger *passengers, int *n, char *filename) {
-    printf("Введите фамилию пассажира, которого нужно удалить: ");
-    char surname[STR_SIZE];
+    char surname[STR_SIZE], initials[STR_SIZE];
+    printf("Введите фамилию пассажира, которого нужно удалить: \n");
     scanf("%s", surname);
+    printf("Введите инициалы пассажира, которого нужно удалить: \n");
+    scanf("%s", initials);
     int i = 0;
     for (; i < *n; i++) {
         if (strcmp(passengers[i].surname, surname) == 0) {
-            break;
+            if (strcmp(passengers[i].initials, initials) == 0)
+                break;
         }
     }
     if (i == *n) {
-        printf("Пассажир с такой фамилией не найден.\n");
+        printf("Пассажир не найден.\n");
         return;
     }
     for (int j = i; j < *n - 1; j++) {
