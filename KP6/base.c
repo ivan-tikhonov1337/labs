@@ -83,7 +83,6 @@ void insert_passenger(Passenger *passengers, int *n, char *filename) {
     passengers[*n] = p;
     (*n)++;
     FILE *out = fopen(filename, "a");
-    fprintf(out, "\n ");
     passenger_write_txt(&p, out);
     fclose(out);    
 }
@@ -129,12 +128,12 @@ void select_passenger(Passenger *passengers, int n) {
 }
 
 void filter_by_num(Passenger *passengers, int n, int num_items) {
-    printf("| %-10s | %-10s | %-5s | %-7s | %-15s | %-5s | %-8s | %-5s |\\\\n", "Surname", "Initials", "Items", "Weight", "To", "Time", "Transfer", "Child");
-    printf("+------------+------------+-------+---------+-----------------+-------+----------+-------+\\\\n");
+    printf("| %-10s | %-10s | %-5s | %-7s | %-15s | %-5s | %-8s | %-5s |\n", "Surname", "Initials", "Items", "Weight", "To", "Time", "Transfer", "Child");
+    printf("+------------+------------+-------+---------+-----------------+-------+----------+-------+\n");
     for (int i = 0; i < n; i++) {
         if (passengers[i].num > num_items) {
             print_passenger(passengers[i]);
         }
     }
-    printf("+------------+------------+-------+---------+-----------------+-------+----------+-------+\\\\n");
+    printf("+------------+------------+-------+---------+-----------------+-------+----------+-------+\n");
 }
