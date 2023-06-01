@@ -31,28 +31,28 @@ typedef struct _sparse_matrix {
 
 static const vectorElement NilElem = { 0, {0} };
 
-void addToList(sparseMatrix** matrixList, sparseMatrix* matrix);
+void Add_To_List(sparseMatrix** matrixList, sparseMatrix* matrix);
 
-sparseMatrix* initSparseMatrix(void);
+sparseMatrix* Init_Sparse_Matrix(void);
 
-int pushBack(sparseMatrix* matrix, int row, int col, double data);
+int Push_Back(sparseMatrix* matrix, int row, int col, double data);
 
-double get(sparseMatrix* matrix, int row, int col);
+double Get(sparseMatrix* matrix, int row, int col);
 
-int find(sparseMatrix* matrix, int row, int col);
+int Find(sparseMatrix* matrix, int row, int col);
 
-int isNilElement(vectorElement* element);
+int Is_Nil_Element(vectorElement* element);
 
-int multiplyByConstant(sparseMatrix* matrix, double constant);
+int Multiply_By_Constant(sparseMatrix* matrix, double constant);
 
-int findMaxInMatrix(sparseMatrix* matrix);
+int Find_Max_In_Matrix(sparseMatrix* matrix);
 
-int readSparseMatrix(sparseMatrix* matrix, FILE* stream);
+int Read_Sparse_Matrix(sparseMatrix* matrix, FILE* stream);
 
-int printSparseMatrix(sparseMatrix* matrix);
+int Print_Sparse_Matrix(sparseMatrix* matrix);
 
-int printSparseAsDense(sparseMatrix* matrix);
+int Print_Sparse_As_Dense(sparseMatrix* matrix);
 
-int freeSparseMatrix(sparseMatrix* matrix);
+int Free_Sparse_Matrix(sparseMatrix* matrix);
 
 #endif  
