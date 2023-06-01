@@ -1,8 +1,8 @@
 #include "spmatrix.h"
 
-void addToList(sparseMatrix** matrixList, sparseMatrix* matrix) {
+void Add_To_List(sparseMatrix** matrixList, sparseMatrix* matrix) {
     for (int index = 0; index < MAX_SIZE; index++) {
-        if ( matrixList[index] == NULL && !isNilElement( &matrix->vector[0] ) ) {
+        if ( matrixList[index] == NULL && !Is_Nil_Element( &matrix->vector[0] ) ) {
             matrixList[index] = matrix;
             return;
         }
@@ -10,7 +10,7 @@ void addToList(sparseMatrix** matrixList, sparseMatrix* matrix) {
 }
 
 //Функция создает и возвращает пустую разреженную матрицу
-sparseMatrix* initSparseMatrix(void) {
+sparseMatrix* Init_Sparse_Matrix(void) {
     //Выделяем память под структуру sparseMatrix
     sparseMatrix* matrix = malloc( sizeof(sparseMatrix) );
     //Задаем количество элементов вектора по умолчанию
@@ -24,13 +24,13 @@ sparseMatrix* initSparseMatrix(void) {
     return matrix;
 }
 
-int isNilElement(vectorElement* element) {
+int Is_Nil_Element(vectorElement* element) {
     return memcmp(element, &NilElem, sizeof(vectorElement)) == 0;
 }
 
 
 //Функция добавляет элемент в конец разреженной матрицы
-int pushBack(sparseMatrix* matrix, int row, int col, double data) {
+int Push_Back(sparseMatrix* matrix, int row, int col, double data) {
     //Если вектор полностью заполнен, возвращаем ошибку
     if ( matrix->vectorSize == VECTOR_MAX_ELEMENTS ) {
         return -1;
@@ -85,8 +85,8 @@ int pushBack(sparseMatrix* matrix, int row, int col, double data) {
 }
 
 //Функция возвращает значение элемента матрицы по его индексам
-double get(sparseMatrix* matrix, int row, int col) {
-    int index = find(matrix, row, col);
+double Get(sparseMatrix* matrix, int row, int col) {
+    int index = Find(matrix, row, col);
     if (index == -1) {
         return 0;
     } else {
@@ -95,7 +95,7 @@ double get(sparseMatrix* matrix, int row, int col) {
 }
 
 //Функция ищет индекс элемента матрицы по его индексам
-int find(sparseMatrix* matrix, int row, int col) {
+int Find(sparseMatrix* matrix, int row, int col) {
     int currentRow = 0;
     for (int index = 0; index < matrix->vectorSize; index++) {
         vectorElement currentElement = matrix->vector[index];
@@ -114,7 +114,7 @@ int find(sparseMatrix* matrix, int row, int col) {
 }
 
 //Функция умножает каждый элемент матрицы на заданную константу
-int multiplyByConstant(sparseMatrix* matrix, double constant) {
+int Multiply_By_Constant(sparseMatrix* matrix, double constant) {
     vectorElement* vector = matrix->vector;
     for (int i = 0; i < matrix->vectorSize; i++) {
         if (vector[i].qualifier == 0) {
@@ -126,7 +126,7 @@ int multiplyByConstant(sparseMatrix* matrix, double constant) {
 }
 
 //Функция считывает разреженную матрицу из файла
-int readSparseMatrix(sparseMatrix* matrix, FILE* stream) {
+int Read_Sparse_Matrix(sparseMatrix* matrix, FILE* stream) {
     if (stream == NULL) {
         perror("Не удалось прочитать матрицу\n");
         return -1;
@@ -152,7 +152,7 @@ int readSparseMatrix(sparseMatrix* matrix, FILE* stream) {
         for (int j = 1; j <= cols; j++) {
             double value;
             fscanf(stream, "%lf", &value);
-            pushRet = pushBack(matrix, i, j, value);
+            pushRet = Push_Back(matrix, i, j, value);
         }
     }
     if (pushRet == -1) {
@@ -167,14 +167,14 @@ int readSparseMatrix(sparseMatrix* matrix, FILE* stream) {
 }
 
 //Функция выводит разреженную матрицу на экран
-int findMaxInMatrix(sparseMatrix* matrix) {
+int Find_Max_In_Matrix(sparseMatrix* matrix) {
     vectorElement elem = matrix->vector[0];
     double max = elem.data.value;
     for (int i = 1; i < VECTOR_DEFAULT_SIZE; i++) {
         vectorElement elem = matrix->vector[i];
         if (elem.data.value > max)
             max = elem.data.value;      
-        if ( isNilElement(&elem) ) {
+        if ( Is_Nil_Element(&elem) ) {
             // элемент равен нулю 
             break;
         }
@@ -183,7 +183,7 @@ int findMaxInMatrix(sparseMatrix* matrix) {
 }
 
 //Функция выводит разреженную матрицу на экран
-int printSparseMatrix(sparseMatrix* matrix) {
+int Print_Sparse_Matrix(sparseMatrix* matrix) {
     for (int i = 0; i < VECTOR_DEFAULT_SIZE; i++) {
         vectorElement elem = matrix->vector[i];
         if (elem.qualifier == 0) {
@@ -200,7 +200,7 @@ int printSparseMatrix(sparseMatrix* matrix) {
             double value = elem.data.value;
             printf("(Столбец: %d, значение: %.2lf)\n", elem.qualifier, value);
         }
-        if ( isNilElement(&elem) ) {
+        if ( Is_Nil_Element(&elem) ) {
             // элемент равен нулю 
             break;
         }
@@ -209,10 +209,10 @@ int printSparseMatrix(sparseMatrix* matrix) {
 }
 
 //Функция выводит разреженную матрицу на экран в плотном формате
-int printSparseAsDense(sparseMatrix* matrix) {
+int Print_Sparse_As_Dense(sparseMatrix* matrix) {
     for (int i = 1; i <= matrix->rows; i++) {
         for (int j = 1; j <= matrix->cols; j++) {
-            printf("%5.1lf  ", get(matrix, i, j));
+            printf("%5.1lf  ", Get(matrix, i, j));
         }
         printf("\n");
     }
@@ -220,7 +220,7 @@ int printSparseAsDense(sparseMatrix* matrix) {
 }
 
 //Функция освобождает память, выделенную под разреженную матрицу
-int freeSparseMatrix(sparseMatrix* matrix) {
+int Free_Sparse_Matrix(sparseMatrix* matrix) {
     if (matrix == NULL) {
         return -1;
     }
