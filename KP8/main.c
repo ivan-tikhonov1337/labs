@@ -35,7 +35,10 @@ int main() {
             case 3:                               // добавление элемента в конец
                 printf("Введите индекс элемента, который хотите удалить: ");
                 scanf("%d", &index);
-                head = DeleteAtIndex(head, index);
+                if (head == NULL)
+                    printf("Cписок пуст\n");
+                else
+                    head = DeleteAtIndex(head, index);
                 break;
             case 4:                               // длина списка
                 printf("Длина списка: %d\n", Length(head));
