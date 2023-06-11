@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
     while (passenger_read_txt(&passengers[n], in)) {
         n++;
     }
+    if (n > 100)
+            printf("В базе слишком много пассажиров. У вас больше на %d, чем возможно\n", n - 99);
     fclose(in);
     while (1) {
         printf("Выберите действие, которое хотите выполнить:\n");
@@ -36,7 +38,10 @@ int main(int argc, char *argv[]) {
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                insert_passenger(passengers, &n, filename);
+                if (n > 100)
+                    printf("База заполнена\n");
+                else 
+                    insert_passenger(passengers, &n, filename);                   
                 break;
             case 2:
                 delete_passenger(passengers, &n, filename);
