@@ -22,8 +22,7 @@ void Choose_Matrix(sparseMatrix** matrixList) {
     printf("Выберите матрицу: ");
 }
 
-void Action_Menu(void)
-{
+void Action_Menu(void) {
     printf("\n1. Умножить матрицу на число.\n");
     printf("2. Разделить на максимальный элемент матрицы.\n");
     printf("3. Напечатать разреженную матрицу.\n");
@@ -32,8 +31,7 @@ void Action_Menu(void)
     printf("6. Выход.\n");
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     bool isFile = false;
     char filename[MAX_LEN];
     FILE* inputStream;
@@ -45,26 +43,25 @@ int main(int argc, char** argv)
             perror("Error");
             exit(ENOENT);
         }
-    }
-    else if (argc == 1) {
+    } else if (argc == 1) {
         inputStream = stdin;
-    }
-    else {
+    } else {
         exit(1);
     }
 
     sparseMatrix** matrixList = calloc( MAX_SIZE, sizeof(sparseMatrix*) );
 
-    if ( isFile ) {
-        while ( true ) {
+    if (isFile) {
+        while (true) {
             sparseMatrix* matrix = Init_Sparse_Matrix();
             int readRet = 0;
             readRet = Read_Sparse_Matrix(matrix, inputStream);
             if ( readRet != 1 ) {
-                if ( readRet == -3 ) { // Matrix was too big
+                if ( readRet == -3 ) { // Матрица слишком большая
                     Free_Sparse_Matrix(matrix);
                     continue;
                 }
+                Free_Sparse_Matrix(matrix);
                 break;
             }
             Add_To_List(matrixList, matrix);
@@ -80,7 +77,7 @@ int main(int argc, char** argv)
                 sparseMatrix* matrix = Init_Sparse_Matrix();
                 Read_Sparse_Matrix(matrix, stdin);
                 Add_To_List(matrixList, matrix);
-                printf("Added.\n");
+                printf("Матрица добавлена.\n");
                 break;
             }
             case 2: {
@@ -138,12 +135,10 @@ int main(int argc, char** argv)
             }
         }
     } while (option != 3);
-
     for (int i = 0; i < MAX_SIZE; i++) {
-        if ( matrixList[i] == NULL ) {
-            break;
-        }
-        Free_Sparse_Matrix(matrixList[i]);
+        if ( matrixList[i] != NULL ) {
+            Free_Sparse_Matrix(matrixList[i]);
+        }        
     }
     free(matrixList);
     return 0;
