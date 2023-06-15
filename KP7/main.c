@@ -108,9 +108,9 @@ int main(int argc, char** argv)
                             break;
                         }
                         case 2: {
-                            double coeff; 
-                            coeff = Find_Max_In_Matrix(currentMatrix);
-                            Multiply_By_Constant(currentMatrix, 1/coeff);
+                            secondCell b;
+                            b = Find_Max_In_Matrix(currentMatrix);
+                            Multiply_Column_By_Constant(currentMatrix, 1/(b.value), b.row);
                             break;
                         }
                         case 3: {
