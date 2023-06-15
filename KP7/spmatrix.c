@@ -16,7 +16,7 @@ sparseMatrix* Init_Sparse_Matrix(void) {
     //Задаем количество элементов вектора по умолчанию
     matrix->vectorAllocatedSize = VECTOR_DEFAULT_SIZE;
     //Выделяем память под вектор
-    matrix->vector = calloc( matrix->vectorAllocatedSize, sizeof(vectorElement) );
+    matrix->vector = calloc(matrix->vectorAllocatedSize, sizeof(vectorElement));
     //Задаем начальные значения для матрицы
     matrix->rows = 0;
     matrix->cols = 0;
@@ -247,7 +247,6 @@ int Free_Sparse_Matrix(sparseMatrix* matrix) {
         return -1;
     }
     free(matrix->vector);
-    matrix->vector = NULL;
     free(matrix);
     return 0;
 }
