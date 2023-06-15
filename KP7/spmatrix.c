@@ -125,6 +125,18 @@ int Multiply_By_Constant(sparseMatrix* matrix, double constant) {
     return 0;
 }
 
+int Multiply_Column_By_Constant(sparseMatrix* matrix, double constant, int column) {
+    vectorElement* vector = matrix->vector;
+    for (int i = 0; i < matrix->vectorSize; i++) {
+        if (vector[i].qualifier == 0) {
+            continue;
+        }
+        if (vector[i].qualifier == column)
+            vector[i].data.value *= constant;
+    }
+    return 0;
+}
+
 //Функция считывает разреженную матрицу из файла
 int Read_Sparse_Matrix(sparseMatrix* matrix, FILE* stream) {
     if (stream == NULL) {
@@ -166,20 +178,30 @@ int Read_Sparse_Matrix(sparseMatrix* matrix, FILE* stream) {
     return 1;
 }
 
-//Функция выводит разреженную матрицу на экран
-int Find_Max_In_Matrix(sparseMatrix* matrix) {
+//Функция находит максимальный элемент и его столбец
+secondCell Find_Max_In_Matrix(sparseMatrix* matrix) {
+    int count = 1;
+    secondCell a,b;
     vectorElement elem = matrix->vector[0];
-    double max = elem.data.value;
+    a.row = elem.qualifier;
+    a.value = elem.data.value;
     for (int i = 1; i < VECTOR_DEFAULT_SIZE; i++) {
         vectorElement elem = matrix->vector[i];
-        if (elem.data.value > max)
-            max = elem.data.value;      
+        if (elem.data.value == a.value)
+            b = a;
+        if (elem.data.value >= a.value) {
+            a.value = elem.data.value;
+            a.row = elem.qualifier;
+        }
         if ( Is_Nil_Element(&elem) ) {
             // элемент равен нулю 
             break;
         }
     }
-    return max;
+    if (count > 1)
+        return b;
+    else
+        return a;
 }
 
 //Функция выводит разреженную матрицу на экран
