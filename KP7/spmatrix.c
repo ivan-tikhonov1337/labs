@@ -180,16 +180,23 @@ int Read_Sparse_Matrix(sparseMatrix* matrix, FILE* stream) {
 
 //Функция находит максимальный элемент и его столбец
 secondCell Find_Max_In_Matrix(sparseMatrix* matrix) {
+    double epsilon = 1;
     int count = 1;
     secondCell a,b;
     vectorElement elem = matrix->vector[0];
     a.row = elem.qualifier;
     a.value = elem.data.value;
+    while (epsilon > 0)
+        epsilon /= 2;
     for (int i = 1; i < VECTOR_DEFAULT_SIZE; i++) {
         vectorElement elem = matrix->vector[i];
-        if (elem.data.value == a.value)
+        if ((fabs(elem.data.value - a.value) >= epsilon) && (elem.qualifier > a.row)) {
+            count++;
             b = a;
-        if (elem.data.value >= a.value) {
+            a.row = elem.qualifier;
+        }
+        if (elem.data.value > a.value) {
+            count = 1;
             a.value = elem.data.value;
             a.row = elem.qualifier;
         }
