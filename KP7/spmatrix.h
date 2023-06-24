@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <math.h>
 
 #define VECTOR_DEFAULT_SIZE 20
 #define VECTOR_MAX_ELEMENTS 100
