@@ -27,8 +27,7 @@ void Action_Menu(void) {
     printf("2. Разделить на максимальный элемент матрицы.\n");
     printf("3. Напечатать разреженную матрицу.\n");
     printf("4. Напечатать матрицу.\n");
-    printf("5. Добавить матрицу в список.\n");
-    printf("6. Выход.\n");
+    printf("5. Выход.\n");
 }
 
 int main(int argc, char** argv) {
@@ -119,15 +118,10 @@ int main(int argc, char** argv) {
                             break;
                         }
                         case 5: {
-                            Add_To_List(matrixList, currentMatrix);
-                            printf("Матрица добавлена в список матриц\n");
-                            break;
-                        }
-                        case 6: {
                             break;
                         }
                     }
-                } while (matrixChoice != 6);
+                } while (matrixChoice != 5);
                 break;
             }
             case 3: {
