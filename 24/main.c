@@ -11,8 +11,6 @@ int main(void) {
                 printf("Введите выражение: ");
                 char expression[1000];
                 scanf("%s", expression);
-                if (n > 0)
-                    tree_free(t);
                 n = 0;
                 while (expression[n] != '\0') {
                     n++;
